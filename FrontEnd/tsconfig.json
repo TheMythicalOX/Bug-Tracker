@@ -17,5 +17,10 @@
     "jsx": "react-jsx",
     "sourceMap": true
   },
-  "include": ["src/TS"]
+  "include": [
+    "src/App.tsx",
+    "src/Home.tsx",
+    "src/Login.tsx",
+    "src/Register.tsx"
+  ]
 }
