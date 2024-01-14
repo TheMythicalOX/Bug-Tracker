@@ -1,6 +1,9 @@
+import Navbar from "./Components/Navbar";
+
 const Home = () => {
   return (
-    <div className="Home">
+    <div>
+      <Navbar />
       <h1 className="text-center">Home</h1>
     </div>
   );

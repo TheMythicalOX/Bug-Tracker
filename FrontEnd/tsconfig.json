@@ -18,6 +18,7 @@
     "sourceMap": true
   },
   "include": [
+    "src",
     "src/App.tsx",
     "src/Home.tsx",
     "src/Login.tsx",
