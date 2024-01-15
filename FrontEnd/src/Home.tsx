@@ -1,15 +1,30 @@
 import Navbar from "./Components/Navbar";
 
 const Home = () => {
+  const name = "Name";
+
   return (
-    <div className="lg:grid grid-cols-12">
+    <div className="lg:grid grid-cols-12 max-h-screen">
       <Navbar />
-      <div className="col-span-10">
-        <div className="lg:grid gap-4 grid-cols-2 h-screen">
-          <div className="bg-red-800">1</div>
-          <div className="bg-red-700">2</div>
-          <div className="bg-red-600">3</div>
-          <div className="bg-red-500">4</div>
+      <div className="lg:grid grid-rows-11 col-span-10">
+        <div className="lg:grid grid-cols-3 row-span-1 text-center items-center bg-stone-900 ">
+          <h3 className="">Logged in as {name}</h3>
+          <h1>Home</h1>
+          <h3 className="">Log out</h3>
+        </div>
+        <div className="lg:grid gap-5 p-5 grid-rows-2 grid-cols-2 row-span-10">
+          <div className="shadow-lg hover:shadow-stone-900 transition-shadow duration-500 bg-stone-900 text-center items-center">
+            Lorem ipsum dolor sit amet.
+          </div>
+          <div className="shadow-lg hover:shadow-stone-900 transition-shadow duration-500 bg-stone-900 text-center items-center">
+            Lorem ipsum dolor sit amet.
+          </div>
+          <div className="shadow-lg hover:shadow-stone-900 transition-shadow duration-500 bg-stone-900 text-center items-center">
+            Lorem ipsum dolor sit amet.
+          </div>
+          <div className="shadow-lg hover:shadow-stone-900 transition-shadow duration-500 bg-stone-900 text-center items-center">
+            Lorem ipsum dolor sit amet.
+          </div>
         </div>
       </div>
     </div>
