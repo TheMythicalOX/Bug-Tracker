@@ -1,15 +1,28 @@
 version: "3.9"
 
 services:
-  php:
-    build: ./Api
+  react:
+    build: ./FrontEnd
+    container_name: React
+    ports:
+      - 3000:3000
     volumes:
-      - ./Api:/var/www/html
+      - ./FrontEnd:/app
+      - ./app/node-modules
+    stdin_open: true
+    tty: true
+
+  php:
+    build: ./Server
+    container_name: PHP
+    volumes:
+      - ./Server:/var/www/html
     ports:
       - 9000:80
 
   db:
     image: mysql
+    container_name: MYSQL
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -17,10 +30,11 @@ services:
     volumes:
       - ./BackEnd/SQL:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - 3306:3306
 
   phpmyadmin:
     image: phpmyadmin
+    container_name: PHPMyAdmin
     restart: always
     ports:
       - 9001:80
