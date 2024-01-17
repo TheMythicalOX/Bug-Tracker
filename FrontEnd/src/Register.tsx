@@ -35,15 +35,39 @@ const Register = () => {
       return;
     }
 
-    if (user.name.length <= 4) {
-      setError("Username must be 5 or more characters");
+    if (user.pwd.length < 5) {
+      setError("Passwords must be 5 or more characters");
       return;
     }
 
-    // TODO more verification
+    if (user.pwd === user.pwd.toLowerCase()) {
+      setError("Password must have at least 1 uppercase character");
+      return;
+    }
+
     if (
-      user.email.indexOf("@") < -1 ||
-      user.email.indexOf(".") < user.email.indexOf("@") ||
+      user.pwd.indexOf("!") < 0 &&
+      user.pwd.indexOf("@") < 0 &&
+      user.pwd.indexOf("$") < 0 &&
+      user.pwd.indexOf("%") < 0 &&
+      user.pwd.indexOf("^") < 0 &&
+      user.pwd.indexOf("&") < 0 &&
+      user.pwd.indexOf("*") < 0 &&
+      user.pwd.indexOf("(") < 0 &&
+      user.pwd.indexOf(")") < 0 &&
+      user.pwd.indexOf(".") < 0 &&
+      user.pwd.indexOf(",") < 0 &&
+      user.pwd.indexOf("?") < 0
+    ) {
+      setError(
+        "Password must have at least 1 special character (! @ $ % ^ & * ( ) , . ?)"
+      );
+      return;
+    }
+
+    if (
+      user.email.indexOf("@") < 0 ||
+      user.email.indexOf(".") < 0 ||
       user.email.length < 3 ||
       user.email.length > 255
     ) {
@@ -56,7 +80,7 @@ const Register = () => {
 
   const registerUser = async (inputs: UserReg): Promise<boolean> => {
     refError.current = true;
-    inputs.email = inputs.email.toLocaleLowerCase();
+    inputs.email = inputs.email.toLowerCase();
     await axios
       .get(
         `http://localhost:9000/register.php/?name=${inputs.name}&email=${inputs.email}`
@@ -74,7 +98,7 @@ const Register = () => {
           setError("Email is already in use");
           refError.current = false;
         }
-        if (res.data === "") {
+        if (res.data !== "") {
           setError("Something went wrong");
           refError.current = false;
         }
@@ -89,16 +113,16 @@ const Register = () => {
           setError("Username or Email is invalid");
           refError.current = false;
         }
-        if (res.data === 1) {
+        if (res.data === 4) {
           setError("Password uses invalid characters");
-          refError.current = false;
-        }
-        if (res.data === 5) {
-          setError("There was an issue registering, Please try again");
           refError.current = false;
         }
         if (res.data === 6) {
           setError("Registration was unsuccessful, Please try again");
+          refError.current = false;
+        }
+        if (res.data !== "User Registered") {
+          setError(res.data);
           refError.current = false;
         }
       });

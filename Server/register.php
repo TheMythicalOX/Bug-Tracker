@@ -5,8 +5,6 @@ header("Access-Control-Allow-Headers: *");
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $conn = new mysqli("db", "root", "root", "bug-tracker");
 
-// echo file_get_contents("php://input");
-
 switch($_SERVER["REQUEST_METHOD"]) {
     case "GET":
         $name = filter_var($_GET["name"], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -22,7 +20,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
         $result = mysqli_query($conn, $q);
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        // var_dump($users);
         
         if ($users) {
             if ($users[0]["email"] == $email) {
@@ -32,11 +29,10 @@ switch($_SERVER["REQUEST_METHOD"]) {
             }
         }
 
-        
         mysqli_free_result($result);
+        break;
 
     case "POST":
-        // Rgister user
         $user = json_decode(file_get_contents("php://input"));
 
         $name = filter_var($user->name, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -59,7 +55,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
         if (!$stmt) {
             var_dump($conn->error_list);
-            echo 5;
             break;
         }
 
@@ -68,9 +63,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
         } else {
             echo 6;
         }
-
-
-
-
+        break;
 }
 mysqli_close($conn);
