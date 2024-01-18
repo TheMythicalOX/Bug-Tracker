@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRef, useState } from "react";
 import { Navigate } from "react-router";
+import FormSub from "./Functions/FormSub";
 
 const Register = () => {
   type UserReg = {
@@ -30,48 +31,27 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (user.pwd !== user.pwd2) {
-      setError("Passwords do not match");
+    if (user.name.length)
+      if (user.pwd !== user.pwd2) {
+        setError("Passwords do not match");
+        return;
+      }
+
+    const checkPass = FormSub.varifyPassword(user.pwd);
+    if (checkPass !== "good") {
+      setError(checkPass);
       return;
     }
 
-    if (user.pwd.length < 5) {
-      setError("Passwords must be 5 or more characters");
+    const checkName = FormSub.varifyUsername(user.name);
+    if (checkName !== "good") {
+      setError(checkName);
       return;
     }
 
-    if (user.pwd === user.pwd.toLowerCase()) {
-      setError("Password must have at least 1 uppercase character");
-      return;
-    }
-
-    if (
-      user.pwd.indexOf("!") < 0 &&
-      user.pwd.indexOf("@") < 0 &&
-      user.pwd.indexOf("$") < 0 &&
-      user.pwd.indexOf("%") < 0 &&
-      user.pwd.indexOf("^") < 0 &&
-      user.pwd.indexOf("&") < 0 &&
-      user.pwd.indexOf("*") < 0 &&
-      user.pwd.indexOf("(") < 0 &&
-      user.pwd.indexOf(")") < 0 &&
-      user.pwd.indexOf(".") < 0 &&
-      user.pwd.indexOf(",") < 0 &&
-      user.pwd.indexOf("?") < 0
-    ) {
-      setError(
-        "Password must have at least 1 special character (! @ $ % ^ & * ( ) , . ?)"
-      );
-      return;
-    }
-
-    if (
-      user.email.indexOf("@") < 0 ||
-      user.email.indexOf(".") < 0 ||
-      user.email.length < 3 ||
-      user.email.length > 255
-    ) {
-      setError("Enter a valid email");
+    const checkEmail = FormSub.varifyEmail(user.email);
+    if (checkEmail !== "good") {
+      setError(checkEmail);
       return;
     }
 
