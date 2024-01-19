@@ -4,17 +4,12 @@ import { Navigate, Link } from "react-router-dom";
 import { useUserContext } from "./Context";
 
 const Login = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const refError = useRef(true);
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [pwd, setPwd] = useState("");
   const user = useUserContext();
   if (user.isLoggedIn) {
-    return <Navigate to="/home" />;
-  }
-
-  if (isLoggedIn) {
     return <Navigate to="/home" />;
   }
 
@@ -27,8 +22,11 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    user.setIsLoggedIn(true);
     refError.current = true;
+    if (name === "" || pwd === "") {
+      setError("Please input all fields");
+      return;
+    }
     if (name.indexOf("@") >= 0) name.toLowerCase();
     await axios
       .post("http://localhost:9000/login.php", { name: name, pwd: pwd })
@@ -46,12 +44,13 @@ const Login = () => {
           refError.current = false;
         }
       });
-    setIsLoggedIn(refError.current);
+    user.setIsLoggedIn(refError.current);
   };
   return (
     <>
       <div className="w-screen h-screen grid grid-cols-1 items-center justify-items-center">
         <form className=" bg-stone-900 w-3/6 h-4/6 rounded-3xl items-center justify-items-center">
+          {error && <h1>{error}</h1>}
           <h1 className="">Login</h1>
           <input
             className="rounded-3xl text-center"
@@ -74,7 +73,7 @@ const Login = () => {
           />
           <button onClick={handleSubmit}>Login</button>
           <p>Need An Account?</p>
-          <Link to="/Register">Sign Up!</Link>
+          <Link to="/register">Sign Up!</Link>
         </form>
       </div>
     </>

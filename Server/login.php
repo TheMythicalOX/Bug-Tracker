@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (password_verify($password, $users[0]["password"])){
         echo "Logged in";
     } else {
-        echo 2;
+        echo "Username or Password is incorrect";
     }
 
     mysqli_free_result($result);
