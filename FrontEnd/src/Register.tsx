@@ -110,7 +110,7 @@ const Register = () => {
   };
 
   return (
-    <div className="Register">
+    <>
       {isReg && <Navigate to="/" />}
       {error && <h1>{error}</h1>}
       <h1>Register</h1>
@@ -151,7 +151,7 @@ const Register = () => {
         />
         <button onClick={handleSubmit}>Register</button>
       </form>
-    </div>
+    </>
   );
 };
 
