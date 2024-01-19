@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     if (!$users) {
-        var_dump($conn->error_list);
+        echo "Username or Password is incorrect";
         mysqli_free_result($result);
         return;
     }
