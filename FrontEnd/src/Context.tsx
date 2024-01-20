@@ -4,12 +4,11 @@ type UserContextProviderT = {
   children: React.ReactNode;
 };
 
-type User = {
-  name: string;
-  password: string;
+export type User = {
+  name?: string;
 };
 
-type UserContextT = {
+export type UserContextT = {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
   isLoggedIn: boolean;
@@ -23,7 +22,6 @@ export default function UserContextProvider({
 }: UserContextProviderT) {
   const [user, setUser] = useState<User>({
     name: "",
-    password: "",
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -43,8 +41,6 @@ export default function UserContextProvider({
 
 export function useUserContext() {
   const context = useContext(UserContext);
-  //check for cookie
-  // if cookie set user
 
   if (!context) {
     throw new Error("test123");

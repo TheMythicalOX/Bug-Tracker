@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useUserContext } from "./Context";
+// import preLogged from "./Functions/preLogged";
 
 const Login = () => {
   const refError = useRef(true);
@@ -9,6 +10,12 @@ const Login = () => {
   const [name, setName] = useState("");
   const [pwd, setPwd] = useState("");
   const user = useUserContext();
+  // useEffect(() => {
+  //   if (!user.isLoggedIn) {
+  //     preLogged.preLoggedIn(user);
+  //   }
+  // }, [user]);
+
   if (user.isLoggedIn) {
     return <Navigate to="/home" />;
   }
@@ -29,7 +36,16 @@ const Login = () => {
     }
     if (name.indexOf("@") >= 0) name.toLowerCase();
     await axios
-      .post("http://localhost:9000/login.php", { name: name, pwd: pwd })
+      .post(
+        "http://localhost:9000/login.php",
+        {
+          name: name,
+          pwd: pwd,
+          cookie: false,
+          withCredentials: true,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         if (res.data === 1) {
           setError("Username or Password is invalid");
@@ -44,6 +60,7 @@ const Login = () => {
           refError.current = false;
         }
       });
+    user.setUser({ name: name });
     user.setIsLoggedIn(refError.current);
   };
   return (
