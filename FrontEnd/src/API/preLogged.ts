@@ -13,6 +13,7 @@ const preLogged = {
       )
       .then((res) => {
         if (res.data === "Logged in") {
+          user.setUser({ name: user.user.name });
           user.setIsLoggedIn(true);
         }
       });
