@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Navbar";
 import { useUserContext } from "./Context";
 import axios from "axios";
 
-const Home = () => {
+const Dashboard = () => {
   const user = useUserContext();
   const handleLogOut = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,4 +55,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

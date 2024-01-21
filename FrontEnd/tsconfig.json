@@ -19,9 +19,9 @@
   },
   "include": [
     "src",
-    "src/App.tsx",
-    "src/Home.tsx",
-    "src/Login.tsx",
-    "src/Register.tsx"
+    "src/Components/App.tsx",
+    "src/Components/Dashboard.tsx",
+    "src/Components/Login.tsx",
+    "src/Components/Register.tsx"
   ]
 }

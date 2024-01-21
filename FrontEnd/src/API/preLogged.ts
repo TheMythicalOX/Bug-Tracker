@@ -1,10 +1,9 @@
 import axios from "axios";
-import { UserContextT } from "../Context";
+import { UserContextT } from "../Components/Context";
 
 const preLogged = {
-  preLoggedIn: (user: UserContextT): boolean => {
-    let isGood = false;
-    axios
+  preLoggedIn: async (user: UserContextT) => {
+    await axios
       .post(
         "http://localhost:9000/login.php",
         {
@@ -17,7 +16,7 @@ const preLogged = {
           user.setIsLoggedIn(true);
         }
       });
-    return isGood;
+    return;
   },
 };
 export default preLogged;

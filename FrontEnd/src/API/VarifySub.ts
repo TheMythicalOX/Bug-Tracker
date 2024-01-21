@@ -1,5 +1,5 @@
-const FormSub = {
-  varifyPassword: (pwd: string): string => {
+const VarifySub = {
+  varifyPassword: (pwd: string): string | null => {
     if (pwd.length < 5) {
       return "Passwords must be 5 or more characters";
     }
@@ -25,10 +25,10 @@ const FormSub = {
       return "Password must have at least 1 special character (! @ $ % ^ & * ( ) , . ?)";
     }
 
-    return "good";
+    return null;
   },
 
-  varifyUsername: (name: string): string => {
+  varifyUsername: (name: string): string | null => {
     if (name.length < 5) {
       return "Username must be 5 or more characters";
     }
@@ -37,10 +37,10 @@ const FormSub = {
       return "Username cannot contain an @ symbol";
     }
 
-    return "good";
+    return null;
   },
 
-  varifyEmail: (email: string): string => {
+  varifyEmail: (email: string): string | null => {
     if (
       email.indexOf("@") < 0 ||
       email.indexOf(".") < 0 ||
@@ -50,8 +50,24 @@ const FormSub = {
       return "Enter a valid email";
     }
 
-    return "good";
+    return null;
+  },
+
+  varifyRegister: (
+    name: string,
+    email: string,
+    pwd: string,
+    pwd2: string
+  ): string | null => {
+    if (pwd !== pwd2) return "Passwords do not match";
+    const varName = VarifySub.varifyUsername(name);
+    if (varName !== "") return varName;
+    const varEmail = VarifySub.varifyEmail(email);
+    if (varName !== "") return varEmail;
+    const varPwd = VarifySub.varifyEmail(pwd);
+    if (varPwd !== "") return varPwd;
+    return null;
   },
 };
 
-export default FormSub;
+export default VarifySub;

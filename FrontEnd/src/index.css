@@ -6,3 +6,9 @@ html {
   color: #e7e5e4;
   background-color: #0c0a09;
 }
+
+.try-log-wait {
+  width: 100vw;
+  width: 100vh;
+  background-color: #338899;
+}
