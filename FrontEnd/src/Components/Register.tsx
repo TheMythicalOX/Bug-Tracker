@@ -37,7 +37,7 @@ const Register = (props: { setChangePage: Function }) => {
     const isReg = await RegisterUser(user);
     if (typeof isReg === "string") {
       setError(isReg);
-    } else {
+    } else if (typeof isReg === "boolean") {
       props.setChangePage("login");
     }
   };

@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once("config.php");
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header('Access-Control-Allow-Headers: Content-Type');
 header("Access-Control-Allow-Credentials: true");
@@ -27,26 +27,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = filter_var($user->pwd, FILTER_SANITIZE_SPECIAL_CHARS);
     
     if(str_contains($user->name, "@")) {
-        $name = filter_var($user->name, FILTER_VALIDATE_EMAIL); 
-        $q = "SELECT id, password FROM users WHERE email= UPPER('$name')";
+        $name = $conn->real_escape_string(filter_var($user->name, FILTER_VALIDATE_EMAIL)); 
+        $q = sprintf("SELECT id, password FROM users WHERE email = UPPER(?)", $conn->real_escape_string($name));
     }
     else {
-        $name = filter_var($user->name, FILTER_SANITIZE_SPECIAL_CHARS );
-        $q = "SELECT id, password FROM users WHERE username = '$name'";
+        $name = $conn->real_escape_string(filter_var($user->name, FILTER_SANITIZE_SPECIAL_CHARS ));
+        $q = "SELECT id, password FROM users WHERE username = ?";
     }
-
+    
     if (!$password) {
         echo 1;
-        mysqli_free_result($result);
         return;
     }
     if (!$name) {
         echo 1;
-        mysqli_free_result($result);
         return;
     }
     
-    $result = mysqli_query($conn, $q);
+    $result = $conn->execute_query($q, [$name]);
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     if (!$users) {

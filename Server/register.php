@@ -7,18 +7,18 @@ $conn = new mysqli("db", "root", "root", "bug-tracker");
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case "GET":
-        $name = filter_var($_GET["name"], FILTER_SANITIZE_SPECIAL_CHARS);
+        $name = $conn->real_escape_string(filter_var($_GET["name"], FILTER_SANITIZE_SPECIAL_CHARS));
 
-        $email = filter_var($_GET["email"], FILTER_VALIDATE_EMAIL);
+        $email = $conn->real_escape_string(filter_var($_GET["email"], FILTER_VALIDATE_EMAIL));
 
         if (!$name || !$email) {
             echo 1;
             break;
         }
 
-        $q = "SELECT * FROM users WHERE username LIKE UPPER('$name') OR email = '$email'";
+        $q = "SELECT * FROM users WHERE username LIKE UPPER(?) OR email = ?";
 
-        $result = mysqli_query($conn, $q);
+        $result = $conn->execute_query($q, [$name, $email]);
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
         
         if ($users) {
