@@ -43,8 +43,8 @@ const Navbar = (props: {
   return (
     <>
       <div className="dash-grid-area-1 row-span-2">
-        <div className="bg-stone-900 col-span-2 lg:h-screen lg:grid grid-rows-10">
-          <div className="lg:grid row-span-1 text-center items-center ">
+        <div className="bg-stone-900 col-span-2 h-screen grid grid-rows-10">
+          <div className="grid row-span-1 text-center items-center ">
             <h1>Logo</h1>
           </div>
           <div

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useUserContext } from "./Context";
+import Projects from "./Projects";
+import Tickets from "./Tickets";
+import Account from "./Account";
 import Navbar from "./Navbar";
 import Home from "./Home";
+import Info from "./Info";
 
 export type dashSwitch = "Home" | "Projects" | "Tickets" | "Account" | "Info";
 
@@ -13,6 +17,14 @@ const Dashboard = () => {
     switch (current) {
       case "Home":
         return <Home />;
+      case "Projects":
+        return <Projects />;
+      case "Tickets":
+        return <Tickets />;
+      case "Account":
+        return <Account />;
+      case "Info":
+        return <Info />;
       default:
         return <Home />;
     }
