@@ -34,11 +34,13 @@ const Register = (props: { setChangePage: Function }) => {
       VarifySub.varifyRegister(user.name, user.email, user.pwd, user.pwd2)
     );
 
-    const isReg = await RegisterUser(user);
-    if (typeof isReg === "string") {
-      setError(isReg);
-    } else if (typeof isReg === "boolean") {
-      props.setChangePage("login");
+    if (!error) {
+      const isReg = await RegisterUser(user);
+      if (typeof isReg === "string") {
+        setError(isReg);
+      } else if (typeof isReg === "boolean") {
+        props.setChangePage("login");
+      }
     }
   };
 

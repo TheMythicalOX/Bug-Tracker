@@ -56,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (password_verify($password, $users[0]["password"])){
         $_SESSION["username"] = $name;
         $_SESSION["password"] = $password;
+        $_SESSION["user_id"] = $users[0]["id"];
         echo "Logged in";
     } else {
         echo "Username or Password is incorrect";

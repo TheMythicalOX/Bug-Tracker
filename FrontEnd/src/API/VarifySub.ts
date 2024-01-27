@@ -64,8 +64,25 @@ const VarifySub = {
     if (varName !== "") return varName;
     const varEmail = VarifySub.varifyEmail(email);
     if (varName !== "") return varEmail;
-    const varPwd = VarifySub.varifyEmail(pwd);
+    const varPwd = VarifySub.varifyPassword(pwd);
     if (varPwd !== "") return varPwd;
+    return null;
+  },
+
+  varifyCreateProject: (
+    name: string,
+    desc: string,
+    pwd: string,
+    pwd2: string
+  ): string | null => {
+    if (pwd !== pwd2) return "Passwords do not match";
+    const varPwd = VarifySub.varifyPassword(pwd);
+    if (varPwd !== "") return varPwd;
+    if (name.length < 5) return "Project Name Must Be 5 or More Characters.";
+    if (desc.length > 500)
+      return "Description Must Be Less Than 500 Characters";
+    if (desc.length < 5)
+      return "Project Description Must Be 5 or More Characters.";
     return null;
   },
 };

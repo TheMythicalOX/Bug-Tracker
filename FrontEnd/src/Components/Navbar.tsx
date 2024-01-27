@@ -15,7 +15,6 @@ const Navbar = (props: {
   let second = enabled;
   let third = enabled;
   let fourth = enabled;
-  let fifth = enabled;
   switch (props.current) {
     case "Home":
       first = disabled;
@@ -28,9 +27,6 @@ const Navbar = (props: {
       break;
     case "Account":
       fourth = disabled;
-      break;
-    case "Info":
-      fifth = disabled;
       break;
     default:
       break;
@@ -79,20 +75,10 @@ const Navbar = (props: {
           >
             <h2>Account</h2>
           </div>
-          <div
-            onClick={() => {
-              if (props.current !== "Info") props.setCurrent("Info");
-            }}
-            className={fifth}
-          >
-            <h2>Info</h2>
+          <div className={enabled} onClick={handleLogOut}>
+            <h2>Logout</h2>
           </div>
         </div>
-      </div>
-      <div className="lg:grid grid-cols-3 dash-grid-area-2 text-center items-center bg-stone-900 ">
-        <h3 className="">Logged in as {props.user.user.name}</h3>
-        <h1>{props.current}</h1>
-        <button onClick={handleLogOut}>Log out</button>
       </div>
     </>
   );

@@ -13,11 +13,9 @@ html {
   display: grid;
   width: 100vw;
   height: 100vh;
-  grid-template-areas:
-    "one two"
-    "one three";
-  grid-template-rows: 10% 90%;
-  grid-template-columns: 15% 85%;
+  grid-template-areas: "one two";
+  grid-template-columns: 10% 90%;
+  grid-template-rows: 100%;
 }
 
 .dash-grid-area-1 {

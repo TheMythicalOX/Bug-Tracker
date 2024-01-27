@@ -5,7 +5,6 @@ import Tickets from "./Tickets";
 import Account from "./Account";
 import Navbar from "./Navbar";
 import Home from "./Home";
-import Info from "./Info";
 
 export type dashSwitch = "Home" | "Projects" | "Tickets" | "Account" | "Info";
 
@@ -23,8 +22,6 @@ const Dashboard = () => {
         return <Tickets />;
       case "Account":
         return <Account />;
-      case "Info":
-        return <Info />;
       default:
         return <Home />;
     }
@@ -35,7 +32,7 @@ const Dashboard = () => {
       {user.isLoggedIn && (
         <div className="dash-grid-area">
           <Navbar current={current} setCurrent={setCurrent} user={user} />
-          <div className="dash-grid-area-3 text-center items-center">
+          <div className="dash-grid-area-2 text-center items-center">
             {dashboardSwitch(current)}
           </div>
         </div>
