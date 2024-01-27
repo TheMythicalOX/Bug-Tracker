@@ -39,6 +39,24 @@ const CreateProject = async (proj: ProjectSub) => {
         return res.data;
       }
     });
+
+  if (error) return error;
+
+  error = await axios
+    .post("http://localhost:9000/projectassign.php", proj, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      if (res.data === 1) {
+        return "Username or Email is invalid";
+      } else if (res.data === 4) {
+        return "Password uses invalid characters";
+      } else if (res.data === 6) {
+        return "Registration was unsuccessful, Please try again";
+      } else if (res.data !== "Project Created") {
+        return res.data;
+      }
+    });
   if (error) {
     return error;
   } else {
