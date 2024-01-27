@@ -1,16 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VarifySub from "../API/VarifySub";
 import CreateProject, { ProjectSub } from "../API/CreateProject";
+import GetProjects from "../API/GetProjects";
+
+export type test = {
+  name: string;
+};
 
 const Projects = () => {
   const [createPage, setCreatPage] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [projectDisplays, setProjectDisplays] = useState<
+    React.ReactNode[] | null
+  >(null);
   const [proj, setProj] = useState<ProjectSub>({
     name: "",
     desc: "",
     pwd: "",
     pwd2: "",
   });
+
+  const displayProjects = async () => {
+    const projects = await GetProjects();
+    if (projects[0].name === "no projects") {
+      return;
+    }
+    if (projects) {
+      let tmp: React.ReactNode[] = [];
+      projects.map((element) => {
+        tmp.push(<div key={element.name}>{element.name}</div>);
+      });
+      setProjectDisplays(tmp);
+    }
+  };
+
+  useEffect(() => {
+    displayProjects();
+  }, []);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const id = e.currentTarget.id;
@@ -51,6 +77,7 @@ const Projects = () => {
             >
               Create Project
             </button>
+            <div>{projectDisplays}</div>
           </div>
           <div className="bg-stone-900">Projects</div>
           <div className="bg-stone-900">Projects</div>
