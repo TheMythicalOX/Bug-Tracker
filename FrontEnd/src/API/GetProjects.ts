@@ -1,7 +1,7 @@
 import axios from "axios";
-import { test } from "../Components/Projects";
+import { projectDisplay } from "../Components/Projects";
 
-const GetProjects = async (): Promise<test[]> => {
+const GetProjects = async (): Promise<projectDisplay[]> => {
   return await axios
     .post("http://localhost:9000/getprojects.php", null, {
       withCredentials: true,

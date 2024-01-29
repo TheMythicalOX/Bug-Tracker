@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import VarifySub from "../API/VarifySub";
 import CreateProject, { ProjectSub } from "../API/CreateProject";
 import GetProjects from "../API/GetProjects";
+import Project from "./Project";
 
-export type test = {
+export type projectDisplay = {
   name: string;
 };
 
 const Projects = () => {
   const [createPage, setCreatPage] = useState(false);
+  const [project, setProject] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [projectDisplays, setProjectDisplays] = useState<
     React.ReactNode[] | null
@@ -20,6 +22,10 @@ const Projects = () => {
     pwd2: "",
   });
 
+  const handleProjectSelect = (name: string) => {
+    setProject(name);
+  };
+
   const displayProjects = async () => {
     const projects = await GetProjects();
     if (projects[0].name === "no projects") {
@@ -28,7 +34,16 @@ const Projects = () => {
     if (projects) {
       let tmp: React.ReactNode[] = [];
       projects.map((element) => {
-        tmp.push(<div key={element.name}>{element.name}</div>);
+        tmp.push(
+          <div
+            onClick={() => {
+              handleProjectSelect(element.name);
+            }}
+            key={element.name}
+          >
+            {element.name}
+          </div>
+        );
       });
       setProjectDisplays(tmp);
     }
@@ -66,7 +81,7 @@ const Projects = () => {
 
   return (
     <>
-      {!createPage && (
+      {!createPage && !project && (
         <div className="grid grid-cols-2 gap-5 p-5 grid-rows-2 h-full">
           <div className="bg-stone-900 col-span-2">
             <button
@@ -79,11 +94,9 @@ const Projects = () => {
             </button>
             <div>{projectDisplays}</div>
           </div>
-          <div className="bg-stone-900">Projects</div>
-          <div className="bg-stone-900">Projects</div>
         </div>
       )}
-      {createPage && (
+      {createPage && !project && (
         <div className="grid grid-cols-2 gap-5 p-5 grid-rows-2 h-full">
           <div className="bg-stone-900 col-span-2">
             {error && <h1>{error}</h1>}
@@ -131,10 +144,9 @@ const Projects = () => {
               <button>Create</button>
             </form>
           </div>
-          <div className="bg-stone-900">Projects</div>
-          <div className="bg-stone-900">Projects</div>
         </div>
       )}
+      {project && <Project name={project} setProject={setProject} />}
     </>
   );
 };
