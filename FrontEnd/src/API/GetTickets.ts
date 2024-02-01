@@ -1,7 +1,7 @@
 import axios from "axios";
-import { ticketDisplay } from "../Components/Project";
+import { TicketDisplay } from "../Components/Project";
 
-const GetTickets = async (project: string): Promise<ticketDisplay[]> => {
+const GetTickets = async (project: string): Promise<TicketDisplay[]> => {
   return await axios
     .post(
       "http://localhost:9000/gettickets.php",

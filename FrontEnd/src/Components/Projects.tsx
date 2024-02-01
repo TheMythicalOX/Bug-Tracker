@@ -3,6 +3,7 @@ import VarifySub from "../API/VarifySub";
 import CreateProject, { ProjectSub } from "../API/CreateProject";
 import GetProjects from "../API/GetProjects";
 import Project from "./Project";
+import GetIsAdmin from "../API/GetIsAdmin";
 
 export type projectDisplay = {
   name: string;
@@ -10,6 +11,7 @@ export type projectDisplay = {
 
 const Projects = () => {
   const [createPage, setCreatPage] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [project, setProject] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [projectDisplays, setProjectDisplays] = useState<
@@ -22,7 +24,9 @@ const Projects = () => {
     pwd2: "",
   });
 
-  const handleProjectSelect = (name: string) => {
+  const handleProjectSelect = async (name: string) => {
+    const tmp = await GetIsAdmin(name);
+    setIsAdmin(tmp);
     setProject(name);
   };
 
@@ -146,7 +150,9 @@ const Projects = () => {
           </div>
         </div>
       )}
-      {project && <Project name={project} setProject={setProject} />}
+      {project && (
+        <Project name={project} setProject={setProject} isAdmin={isAdmin} />
+      )}
     </>
   );
 };

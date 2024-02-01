@@ -34,13 +34,13 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
         $desc = filter_var($user->desc, FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $severity = (int)filter_var($user->severity, FILTER_SANITIZE_SPECIAL_CHARS);
+        $severity = filter_var($user->severity, FILTER_SANITIZE_SPECIAL_CHARS);
 
         $user_id = $_SESSION["user_id"];
 
         $project = filter_var($user->project, FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $status = 1;
+        $status = "New";
 
         if (!$title || !$desc || !$severity || !$project) {
             echo 1;
@@ -54,7 +54,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
         $project = (int)$project_id[0]["project_id"];
 
-        $q = sprintf("INSERT INTO tickets VALUES (NULL, '%s', '%s', %d, %d, CURRENT_TIMESTAMP, %d, %d)", $title, $desc, $user_id, $severity, $status, $project);
+        $q = sprintf("INSERT INTO tickets VALUES (NULL, '%s', '%s', %d, '%s', CURRENT_TIMESTAMP, '%s', %d)", $title, $desc, $user_id, $severity, $status, $project);
         
         $stmt = $conn->prepare($q);
         

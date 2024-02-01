@@ -2,22 +2,33 @@ import { useEffect, useState } from "react";
 import VarifySub from "../API/VarifySub";
 import CreateTicket from "../API/CreateTicket";
 import GetTickets from "../API/GetTickets";
+import GetTicket from "../API/GetTicket";
 
 export type Ticket = {
   title: string;
   desc: string;
-  severity: number | null;
+  severity: "Low" | "Medium" | "High" | "ASAP" | null;
   project: string;
   role: string;
 };
 
-export type ticketDisplay = {
+export type TicketDisplay = {
   title: string;
+  desc: string;
+  severity: "Low" | "Medium" | "High" | "ASAP";
+  status: "New" | "In Progress" | "Functional" | "Complete";
 };
 
-const Project = (props: { name: string; setProject: Function }) => {
+const Project = (props: {
+  name: string;
+  setProject: Function;
+  isAdmin: boolean;
+}) => {
   const [createTicket, setCreateTicket] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState<TicketDisplay | null>(
+    null
+  );
   const [ticketDisplays, setTicketDisplays] = useState<
     React.ReactNode[] | null
   >(null);
@@ -29,7 +40,10 @@ const Project = (props: { name: string; setProject: Function }) => {
     role: "",
   });
 
-  const handleTicketSelect = (name: string) => {};
+  const handleTicketSelect = async (name: string) => {
+    const ticket = await GetTicket(name);
+    setSelectedTicket(ticket);
+  };
 
   const displayTickets = async () => {
     const projects = await GetTickets(props.name);
@@ -68,10 +82,10 @@ const Project = (props: { name: string; setProject: Function }) => {
   const handleChange2 = (e: React.FormEvent<HTMLSelectElement>) => {
     if (error) setError(null);
     let tmp = e.currentTarget.value;
-    if (tmp === "1") setTicket({ ...ticket, severity: 1 });
-    if (tmp === "2") setTicket({ ...ticket, severity: 2 });
-    if (tmp === "3") setTicket({ ...ticket, severity: 3 });
-    if (tmp === "4") setTicket({ ...ticket, severity: 4 });
+    if (tmp === "Low") setTicket({ ...ticket, severity: tmp });
+    if (tmp === "Medium") setTicket({ ...ticket, severity: tmp });
+    if (tmp === "High") setTicket({ ...ticket, severity: tmp });
+    if (tmp === "ASAP") setTicket({ ...ticket, severity: tmp });
   };
 
   const handleCreateProject = async (e: React.FormEvent) => {
@@ -114,8 +128,40 @@ const Project = (props: { name: string; setProject: Function }) => {
             >
               Make Ticket
             </button>
+            {props.isAdmin && (
+              <div>
+                <button>Admin Panel</button>
+              </div>
+            )}
             <div>{ticketDisplays}</div>
           </div>
+          {selectedTicket && (
+            <div
+              onClick={() => {
+                setSelectedTicket(null);
+              }}
+              className="h-screen w-screen absolute inset-0 grid justify-center items-center filter backdrop-blur-sm"
+            >
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className="ml-40 bg-black w-96 h-1/3  rounded-3xl"
+              >
+                <h1>{selectedTicket.title}</h1>
+                <h1>{selectedTicket.desc}</h1>
+                <h1>{selectedTicket.status}</h1>
+                <h1>{selectedTicket.severity}</h1>
+                <button
+                  onClick={() => {
+                    setSelectedTicket(null);
+                  }}
+                >
+                  Go Back
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
       {createTicket && (
@@ -157,10 +203,10 @@ const Project = (props: { name: string; setProject: Function }) => {
                 placeholder="Role"
               />
               <select id="severity" onChange={handleChange2}>
-                <option value={1}>Low</option>
-                <option value={2}>Medium</option>
-                <option value={3}>High</option>
-                <option value={4}>Immediate</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="ASAP">ASAP</option>
               </select>
               <button>Create</button>
             </form>

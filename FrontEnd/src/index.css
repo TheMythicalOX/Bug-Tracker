@@ -14,7 +14,7 @@ html {
   width: 100vw;
   height: 100vh;
   grid-template-areas: "one two";
-  grid-template-columns: 10% 90%;
+  grid-template-columns: 10rem auto;
   grid-template-rows: 100%;
 }
 
