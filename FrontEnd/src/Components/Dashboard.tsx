@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useUserContext } from "./Context";
 import Projects from "./Projects";
-import Tickets from "./Tickets";
 import Account from "./Account";
 import Navbar from "./Navbar";
 import Home from "./Home";
 
-export type dashSwitch = "Home" | "Projects" | "Tickets" | "Account" | "Info";
+export type dashSwitch = "Home" | "Projects" | "Account";
 
 const Dashboard = () => {
   const [current, setCurrent] = useState<dashSwitch>("Home");
@@ -18,8 +17,6 @@ const Dashboard = () => {
         return <Home />;
       case "Projects":
         return <Projects />;
-      case "Tickets":
-        return <Tickets />;
       case "Account":
         return <Account />;
       default:

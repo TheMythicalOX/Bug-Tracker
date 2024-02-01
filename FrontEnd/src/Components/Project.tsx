@@ -3,6 +3,7 @@ import VarifySub from "../API/VarifySub";
 import CreateTicket from "../API/CreateTicket";
 import GetTickets from "../API/GetTickets";
 import GetTicket from "../API/GetTicket";
+import AdminPanel from "./AdminPanel";
 
 export type Ticket = {
   title: string;
@@ -25,6 +26,7 @@ const Project = (props: {
   isAdmin: boolean;
 }) => {
   const [createTicket, setCreateTicket] = useState(false);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedTicket, setSelectedTicket] = useState<TicketDisplay | null>(
     null
@@ -130,11 +132,42 @@ const Project = (props: {
             </button>
             {props.isAdmin && (
               <div>
-                <button>Admin Panel</button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowAdminPanel(true);
+                  }}
+                >
+                  Admin Panel
+                </button>
               </div>
             )}
             <div>{ticketDisplays}</div>
           </div>
+          {showAdminPanel && (
+            <div
+              onClick={() => {
+                setShowAdminPanel(false);
+              }}
+              className="h-screen w-screen absolute inset-0 grid justify-center items-center filter backdrop-blur-sm"
+            >
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className="ml-40 bg-black w-96 h-1/3  rounded-3xl"
+              >
+                <AdminPanel project={props.name} />
+                <button
+                  onClick={() => {
+                    setShowAdminPanel(false);
+                  }}
+                >
+                  Go Back
+                </button>
+              </div>
+            </div>
+          )}
           {selectedTicket && (
             <div
               onClick={() => {

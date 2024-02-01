@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import VarifySub from "../API/VarifySub";
 import CreateProject, { ProjectSub } from "../API/CreateProject";
 import GetProjects from "../API/GetProjects";
+import JoinProject from "../API/JoinProject";
 import Project from "./Project";
 import GetIsAdmin from "../API/GetIsAdmin";
 
@@ -11,9 +12,12 @@ export type projectDisplay = {
 
 const Projects = () => {
   const [createPage, setCreatPage] = useState(false);
+  const [JoinProjectDisplay, setJoinProjectDisplay] = useState(false);
+  const [projectID, setProjectID] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [project, setProject] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [joinError, setJoinError] = useState<string | null>(null);
   const [projectDisplays, setProjectDisplays] = useState<
     React.ReactNode[] | null
   >(null);
@@ -30,9 +34,18 @@ const Projects = () => {
     setProject(name);
   };
 
+  const handleProjectJoin = async () => {
+    const tmp = await JoinProject(projectID);
+    if (typeof tmp === "string") {
+      setJoinError(tmp);
+    } else if (tmp) {
+      setJoinError("Request Has Been Sent.");
+    }
+  };
+
   const displayProjects = async () => {
     const projects = await GetProjects();
-    if (projects[0].name === "no projects") {
+    if (typeof projects === "string") {
       return;
     }
     if (projects) {
@@ -79,6 +92,7 @@ const Projects = () => {
         setError(isReg);
       } else if (typeof isReg === "boolean") {
         setCreatPage(false);
+        displayProjects();
       }
     }
   };
@@ -96,6 +110,59 @@ const Projects = () => {
             >
               Create Project
             </button>
+            <button
+              onClick={() => {
+                setJoinProjectDisplay(true);
+              }}
+              className="bg-black hover:bg-gray-950 rounded-md p-2"
+            >
+              Join Project
+            </button>
+            {JoinProjectDisplay && (
+              <div
+                onClick={() => {
+                  setJoinProjectDisplay(false);
+                }}
+                className="h-screen w-screen absolute inset-0 grid justify-center items-center filter backdrop-blur-sm"
+              >
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  className="ml-40 bg-black w-96 h-1/3  rounded-3xl"
+                >
+                  {joinError && <h1>{joinError}</h1>}
+                  <h1>Request Join</h1>
+                  <button
+                    onClick={() => {
+                      setJoinProjectDisplay(false);
+                    }}
+                  >
+                    Go Back
+                  </button>
+                  <form>
+                    <input
+                      type="text"
+                      required
+                      value={projectID}
+                      onChange={(e) => {
+                        if (joinError) setJoinError(null);
+                        setProjectID(e.target.value);
+                      }}
+                      placeholder="Project ID"
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleProjectJoin();
+                      }}
+                    >
+                      Send
+                    </button>
+                  </form>
+                </div>
+              </div>
+            )}
             <div>{projectDisplays}</div>
           </div>
         </div>

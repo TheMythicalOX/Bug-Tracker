@@ -11,20 +11,14 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case "POST":
         $project = json_decode(file_get_contents("php://input"));
         $project_name = filter_var($project->project, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $q = sprintf("SELECT username FROM users WHERE id IN (SELECT user_id FROM project_join WHERE project_id IN (SELECT project_id FROM projects WHERE name = '%s') AND status = '0')", $project_name);
         
-        $q = sprintf("SELECT title FROM tickets 
-        WHERE ticket_id IN 
-        (SELECT ticket_id FROM ticket_assign WHERE project_id = 
-        (SELECT project_id FROM projects WHERE name = UPPER('%s'))) 
-        LIMIT 20",$project_name);
-
         $result = $conn->query($q);
-        $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        if ($projects) {
-            echo json_encode($projects);
-            mysqli_free_result($result);
-            break;
+        $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        
+        if ($users){
+            echo json_encode($users);
         }
         else {
             echo 1;

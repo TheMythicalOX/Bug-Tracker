@@ -25,9 +25,6 @@ const Navbar = (props: {
     case "Projects":
       second = disabled;
       break;
-    case "Tickets":
-      third = disabled;
-      break;
     case "Account":
       fourth = disabled;
       break;
@@ -62,14 +59,6 @@ const Navbar = (props: {
               className={second}
             >
               <h2>Projects</h2>
-            </div>
-            <div
-              onClick={() => {
-                if (props.current !== "Tickets") props.setCurrent("Tickets");
-              }}
-              className={third}
-            >
-              <h2>Tickets</h2>
             </div>
             <div
               onClick={() => {
