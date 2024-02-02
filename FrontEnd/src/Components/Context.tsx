@@ -10,6 +10,8 @@ export type User = {
 
 export type UserContextT = {
   user: User;
+  primary: string;
+  secondary: string;
   setUser: React.Dispatch<React.SetStateAction<User>>;
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +30,8 @@ export default function UserContextProvider({
   return (
     <UserContext.Provider
       value={{
+        primary: "stone-300",
+        secondary: "stone-400",
         user,
         setUser,
         isLoggedIn,

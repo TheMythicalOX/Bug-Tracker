@@ -1,5 +1,5 @@
 import { dashSwitch } from "./Dashboard";
-import { UserContextT } from "./Context";
+import { UserContextT, useUserContext } from "./Context";
 import Logout from "../API/Logout";
 import { useState } from "react";
 
@@ -9,15 +9,13 @@ const Navbar = (props: {
   user: UserContextT;
 }) => {
   const [tryLogout, setTryLogout] = useState(false);
+  const user = useUserContext();
 
-  const enabled =
-    "lg:grid shadow shadow-stone-950 row-span-1 text-center items-center transition-colors duration-500 hover:bg-stone-950";
-  const disabled =
-    "lg:grid shadow shadow-stone-950 row-span-1 text-center items-center transition-colors bg-stone-950";
+  const enabled = `lg:grid shadow shadow-${user.secondary} row-span-1 text-center items-center transition-colors duration-500 hover:bg-${user.secondary}`;
+  const disabled = `lg:grid shadow shadow-${user.secondary} row-span-1 text-center items-center transition-colors bg-${user.secondary}`;
   let first = enabled;
   let second = enabled;
   let third = enabled;
-  let fourth = enabled;
   switch (props.current) {
     case "Home":
       first = disabled;
@@ -26,7 +24,7 @@ const Navbar = (props: {
       second = disabled;
       break;
     case "Account":
-      fourth = disabled;
+      third = disabled;
       break;
     default:
       break;
@@ -39,11 +37,15 @@ const Navbar = (props: {
   return (
     <>
       <div className="dash-grid-area-1 row-span-1">
-        <div className="bg-stone-900 col-span-2 h-screen grid grid-rows-10">
-          <div className="grid row-span-1 text-center items-center ">
+        <div
+          className={`bg-${user.primary} col-span-2 h-screen grid grid-rows-10`}
+        >
+          <div
+            className={`shadow shadow-${user.secondary} grid row-span-1 text-center items-center `}
+          >
             <h1>Logo</h1>
           </div>
-          <div className="grid row-span-3">
+          <div className="grid row-span-2">
             <div
               onClick={() => {
                 if (props.current !== "Home") props.setCurrent("Home");
@@ -64,7 +66,7 @@ const Navbar = (props: {
               onClick={() => {
                 if (props.current !== "Account") props.setCurrent("Account");
               }}
-              className={fourth}
+              className={third}
             >
               <h2>Account</h2>
             </div>

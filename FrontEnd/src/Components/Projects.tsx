@@ -5,12 +5,14 @@ import GetProjects from "../API/GetProjects";
 import JoinProject from "../API/JoinProject";
 import Project from "./Project";
 import GetIsAdmin from "../API/GetIsAdmin";
+import { useUserContext } from "./Context";
 
 export type projectDisplay = {
   name: string;
 };
 
 const Projects = () => {
+  const user = useUserContext();
   const [createPage, setCreatPage] = useState(false);
   const [JoinProjectDisplay, setJoinProjectDisplay] = useState(false);
   const [projectID, setProjectID] = useState("");
@@ -52,13 +54,16 @@ const Projects = () => {
       let tmp: React.ReactNode[] = [];
       projects.map((element) => {
         tmp.push(
-          <div
-            onClick={() => {
-              handleProjectSelect(element.name);
-            }}
-            key={element.name}
-          >
+          <div className={`p-5 justify-evenly flex`} key={element.name}>
             {element.name}
+            <button
+              onClick={() => {
+                handleProjectSelect(element.name);
+              }}
+              className={`bg-${user.secondary} w-48 p-2 rounded-2xl`}
+            >
+              Go To Project
+            </button>
           </div>
         );
       });
@@ -101,12 +106,12 @@ const Projects = () => {
     <>
       {!createPage && !project && (
         <div className="grid grid-cols-2 gap-5 p-5 grid-rows-2 h-full">
-          <div className="bg-stone-900 col-span-2">
+          <div className={`bg-${user.primary} col-span-2 overflow-y-scroll`}>
             <button
               onClick={() => {
                 setCreatPage(true);
               }}
-              className="bg-black hover:bg-gray-950 rounded-md p-2"
+              className={`bg-${user.secondary} rounded-md p-2`}
             >
               Create Project
             </button>
@@ -114,7 +119,7 @@ const Projects = () => {
               onClick={() => {
                 setJoinProjectDisplay(true);
               }}
-              className="bg-black hover:bg-gray-950 rounded-md p-2"
+              className={`bg-${user.secondary} rounded-md p-2`}
             >
               Join Project
             </button>
@@ -163,7 +168,7 @@ const Projects = () => {
                 </div>
               </div>
             )}
-            <div>{projectDisplays}</div>
+            <div className={`grid grid-cols-1 p-10`}>{projectDisplays}</div>
           </div>
         </div>
       )}
@@ -175,7 +180,7 @@ const Projects = () => {
               onClick={() => {
                 setCreatPage(false);
               }}
-              className="bg-black hover:bg-gray-950 rounded-md p-2"
+              className={`bg-${user.secondary} rounded-md p-2`}
             >
               Go Back
             </button>
