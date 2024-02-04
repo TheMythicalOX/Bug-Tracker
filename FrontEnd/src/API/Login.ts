@@ -7,11 +7,12 @@ const tryLogin = {
     pwd: string,
     user: UserContextT
   ): Promise<string> => {
+    let error = "";
     if (name === "" || pwd === "") {
       return "Please input all fields";
     }
     if (name.indexOf("@") >= 0) name.toLowerCase();
-    await axios
+    error = await axios
       .post(
         "http://localhost:9000/login.php",
         {
@@ -31,8 +32,9 @@ const tryLogin = {
         }
         if (res.data !== "Logged in") {
           return res.data;
-        }
+        } else return "";
       });
+    if (error !== "") return error;
     user.setUser({ name: name });
     user.setIsLoggedIn(true);
     return "";

@@ -11,8 +11,8 @@ const Navbar = (props: {
   const [tryLogout, setTryLogout] = useState(false);
   const user = useUserContext();
 
-  const enabled = `lg:grid shadow shadow-${user.secondary} row-span-1 text-center items-center transition-colors duration-500 hover:bg-${user.secondary}`;
-  const disabled = `lg:grid shadow shadow-${user.secondary} row-span-1 text-center items-center transition-colors bg-${user.secondary}`;
+  const enabled = `lg:grid shadow shadow-stone-400 row-span-1 text-center items-center transition-colors duration-500 hover:bg-stone-400`;
+  const disabled = `lg:grid shadow shadow-stone-400 row-span-1 text-center items-center transition-colors bg-stone-400`;
   let first = enabled;
   let second = enabled;
   let third = enabled;
@@ -37,11 +37,9 @@ const Navbar = (props: {
   return (
     <>
       <div className="dash-grid-area-1 row-span-1">
-        <div
-          className={`bg-${user.primary} col-span-2 h-screen grid grid-rows-10`}
-        >
+        <div className={`bg-stone-300 col-span-2 h-screen grid grid-rows-10`}>
           <div
-            className={`shadow shadow-${user.secondary} grid row-span-1 text-center items-center `}
+            className={`shadow shadow-stone-400 grid row-span-1 text-center items-center `}
           >
             <h1>Logo</h1>
           </div>

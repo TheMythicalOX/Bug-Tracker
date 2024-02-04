@@ -22,38 +22,57 @@ const Login = (props: { setChangePage: Function }) => {
   return (
     <>
       <div className="w-screen h-screen grid grid-cols-1 items-center justify-items-center">
-        <form className=" bg-stone-900 w-3/6 h-4/6 rounded-3xl items-center justify-items-center">
+        <form
+          className={`bg-stone-300 w-3/6 h-4/6 rounded-3xl items-center justify-items-center grid`}
+        >
           {error && <h1>{error}</h1>}
-          <h1 className="">Login</h1>
-          <input
-            className="rounded-3xl text-center"
-            required
-            type="text"
-            id="name"
-            placeholder="Username or Email"
-            autoComplete="off"
-            value={name}
-            onChange={handleChange}
-          />
-          <input
-            className="rounded-3xl text-center"
-            required
-            type="password"
-            id="pwd"
-            placeholder="Password"
-            value={pwd}
-            onChange={handleChange}
-          />
-          <button onClick={handleSubmit}>Login</button>
-          <p>Need An Account?</p>
+          <h1 className="text-3xl">Login</h1>
+          <div className={`grid`}>
+            <label className={`pl-5 text-2xl`} htmlFor="name">
+              Username or Email
+            </label>
+            <input
+              className="rounded-3xl text-left p-3 px-6"
+              required
+              type="text"
+              id="name"
+              placeholder="Username or Email"
+              autoComplete="off"
+              value={name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={`grid`}>
+            <label className={`pl-5 text-2xl`} htmlFor="pwd">
+              Password
+            </label>
+            <input
+              className="rounded-3xl text-left p-3 px-6"
+              required
+              type="password"
+              id="pwd"
+              placeholder="Password"
+              value={pwd}
+              onChange={handleChange}
+            />
+          </div>
           <button
-            onClick={(e: React.FormEvent) => {
-              e.preventDefault();
-              props.setChangePage("register");
-            }}
+            className={`bg-blue-500 text-2xl p-3 px-16 rounded-3xl`}
+            onClick={handleSubmit}
           >
-            Sign Up!
+            Login
           </button>
+          <div>
+            <p>Need An Account?</p>
+            <button
+              onClick={(e: React.FormEvent) => {
+                e.preventDefault();
+                props.setChangePage("register");
+              }}
+            >
+              Sign Up!
+            </button>
+          </div>
         </form>
       </div>
     </>
