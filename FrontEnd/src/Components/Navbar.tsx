@@ -87,17 +87,27 @@ const Navbar = (props: {
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                  className="ml-40 bg-black w-96 h-1/3  rounded-3xl"
+                  className="ml-40 bg-stone-300 shadow-stone-600 shadow-2xl grid h-1/3 text-center items-center rounded-3xl"
                 >
-                  <h2>Are You Sure You Want To Logout?</h2>
-                  <button onClick={handleLogOut}>Logout</button>
-                  <button
-                    onClick={() => {
-                      setTryLogout(false);
-                    }}
-                  >
-                    Go Back
-                  </button>
+                  <h2 className="text-3xl p-10">
+                    Are You Sure You Want To Logout?
+                  </h2>
+                  <div className="grid gap-10 justify-center">
+                    <button
+                      className="bg-blue-500 text-2xl p-3 px-16 rounded-3xl"
+                      onClick={handleLogOut}
+                    >
+                      Logout
+                    </button>
+                    <button
+                      className="bg-stone-400 text-2xl p-3 px-16 rounded-3xl"
+                      onClick={() => {
+                        setTryLogout(false);
+                      }}
+                    >
+                      Go Back
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

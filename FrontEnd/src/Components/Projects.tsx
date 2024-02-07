@@ -54,15 +54,18 @@ const Projects = () => {
       let tmp: React.ReactNode[] = [];
       projects.map((element) => {
         tmp.push(
-          <div className={`p-5 justify-evenly flex`} key={element.name}>
-            {element.name}
+          <div
+            className={`p-5 grid grid-cols-2 items-center`}
+            key={element.name}
+          >
+            <h1 className="text-3xl">{element.name}</h1>
             <button
               onClick={() => {
                 handleProjectSelect(element.name);
               }}
-              className={`bg-stone-400 w-48 p-2 rounded-2xl`}
+              className={`bg-blue-500 text-2xl p-3 m-auto w-52 rounded-2xl`}
             >
-              Go To Project
+              {"Go To Project -->"}
             </button>
           </div>
         );
@@ -105,24 +108,31 @@ const Projects = () => {
   return (
     <>
       {!createPage && !project && (
-        <div className="grid grid-cols-2 gap-5 p-5 grid-rows-2 h-full">
-          <div className={`bg-stone-300 col-span-2 overflow-y-scroll`}>
-            <button
-              onClick={() => {
-                setCreatPage(true);
-              }}
-              className={`bg-stone-400 rounded-md p-2`}
-            >
-              Create Project
-            </button>
-            <button
-              onClick={() => {
-                setJoinProjectDisplay(true);
-              }}
-              className={`bg-stone-400 rounded-md p-2`}
-            >
-              Join Project
-            </button>
+        <div className="grid gap-5 p-5 h-full items-center">
+          <div
+            className={`bg-stone-300 h-1/2 py-10 grid items-center rounded-3xl`}
+          >
+            <div className="grid grid-cols-2 gap-10 m-auto">
+              <button
+                onClick={() => {
+                  setCreatPage(true);
+                }}
+                className={`bg-stone-400 text-2xl rounded-md p-2`}
+              >
+                Create Project
+              </button>
+              <button
+                onClick={() => {
+                  setJoinProjectDisplay(true);
+                }}
+                className={`bg-stone-400 text-2xl rounded-md p-2`}
+              >
+                Join Project
+              </button>
+            </div>
+            <div className="overflow-y-scroll h-5/6">
+              <div className={`grid grid-cols-1 p-10 `}>{projectDisplays}</div>
+            </div>
             {JoinProjectDisplay && (
               <div
                 onClick={() => {
@@ -168,7 +178,6 @@ const Projects = () => {
                 </div>
               </div>
             )}
-            <div className={`grid grid-cols-1 p-10`}>{projectDisplays}</div>
           </div>
         </div>
       )}
