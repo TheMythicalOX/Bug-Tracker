@@ -110,7 +110,7 @@ const Projects = () => {
       {!createPage && !project && (
         <div className="grid gap-5 p-5 h-full items-center">
           <div
-            className={`bg-stone-300 h-1/2 py-10 grid items-center rounded-3xl`}
+            className={`bg-stone-300 h-4/6 py-10 grid items-center rounded-3xl`}
           >
             <div className="grid grid-cols-2 gap-10 m-auto">
               <button

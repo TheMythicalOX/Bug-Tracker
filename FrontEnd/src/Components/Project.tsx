@@ -57,12 +57,18 @@ const Project = (props: {
       projects.map((element) => {
         tmp.push(
           <div
-            onClick={() => {
-              handleTicketSelect(element.title);
-            }}
+            className={`p-5 grid grid-cols-2 items-center`}
             key={element.title}
           >
-            {element.title}
+            <h1 className="text-3xl">{element.title}</h1>
+            <button
+              onClick={() => {
+                handleTicketSelect(element.title);
+              }}
+              className={`bg-blue-500 text-2xl p-3 m-auto w-52 rounded-2xl`}
+            >
+              {"View Ticket"}
+            </button>
           </div>
         );
       });
@@ -110,39 +116,44 @@ const Project = (props: {
   return (
     <>
       {!createTicket && (
-        <div className="grid grid-cols-2 gap-5 p-5 grid-rows-2 h-full">
-          <div className="bg-stone-900 col-span-2">
-            {error && <h1>{error}</h1>}
-            {props.name}
-            <button
-              className="bg-black rounded-md p-2"
-              onClick={() => {
-                props.setProject(null);
-              }}
-            >
-              Go Back
-            </button>
-            <button
-              onClick={() => {
-                setCreateTicket(true);
-              }}
-              className="bg-black rounded-md p-2"
-            >
-              Make Ticket
-            </button>
-            {props.isAdmin && (
-              <div>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowAdminPanel(true);
-                  }}
-                >
-                  Admin Panel
-                </button>
-              </div>
-            )}
-            <div>{ticketDisplays}</div>
+        <div className="grid gap-5 p-5 h-full items-center">
+          <div className="bg-stone-300 h-4/6 py-10 grid items-center rounded-3xl">
+            <div className="grid grid-cols-2 gap-10 m-auto">
+              <h1 className="col-span-2 text-2xl">{props.name}</h1>
+              {error && <h1 className="col-span-2 text-2xl">{error}</h1>}
+              <button
+                className="bg-stone-400 text-2xl rounded-md p-2"
+                onClick={() => {
+                  props.setProject(null);
+                }}
+              >
+                Go Back
+              </button>
+              <button
+                onClick={() => {
+                  setCreateTicket(true);
+                }}
+                className="bg-stone-400 text-2xl rounded-md p-2"
+              >
+                Make Ticket
+              </button>
+              {props.isAdmin && (
+                <div className="col-span-2">
+                  <button
+                    className="bg-stone-400 text-2xl rounded-md p-2 "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowAdminPanel(true);
+                    }}
+                  >
+                    Admin Panel
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className="overflow-y-scroll h-5/6">
+              <div className={`grid grid-cols-1 p-10 `}>{ticketDisplays}</div>
+            </div>
           </div>
           {showAdminPanel && (
             <div
@@ -155,10 +166,11 @@ const Project = (props: {
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
-                className="ml-40 bg-black w-96 h-1/3  rounded-3xl"
+                className="ml-40 bg-stone-300 shadow-stone-600 shadow-2xl grid h-1/3 text-center items-center rounded-3xl"
               >
                 <AdminPanel project={props.name} />
                 <button
+                  className="bg-stone-400 text-2xl p-3 px-16 rounded-3xl"
                   onClick={() => {
                     setShowAdminPanel(false);
                   }}

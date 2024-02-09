@@ -72,7 +72,8 @@ const AdminPanel = (props: { project: string }) => {
   return (
     <>
       {!loggedIn && (
-        <div>
+        <div className="grid">
+          <h2 className="text-3xl p-10">Enter Admin Password</h2>
           {error && <h1>{error}</h1>}
           <input
             onChange={(e) => {
@@ -80,11 +81,13 @@ const AdminPanel = (props: { project: string }) => {
               setPwd(e.target.value);
             }}
             value={pwd}
+            className="rounded-3xl text-left p-3 px-6"
             required
             type="password"
             placeholder="Password"
           />
           <button
+            className="bg-blue-500 text-2xl p-3 px-16 rounded-3xl"
             onClick={(e) => {
               e.preventDefault();
               handleLogin();
@@ -96,7 +99,7 @@ const AdminPanel = (props: { project: string }) => {
       )}
       {loggedIn && (
         <div>
-          <h1>test</h1>
+          <h1>Logged In As Admin</h1>
           {joinDisplays}
         </div>
       )}
