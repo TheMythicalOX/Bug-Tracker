@@ -1,6 +1,6 @@
 <?php
 require_once("config.php");
-header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Origin: " + .$_ENV["IP"]);
 header('Access-Control-Allow-Headers: Content-Type');
 header("Access-Control-Allow-Credentials: true");
 
@@ -9,8 +9,10 @@ $conn = new mysqli("db", "root", "root", "bug-tracker");
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case "POST":
-        $user_id = $_SESSION["user_id"];
-        $q = sprintf("SELECT name FROM projects WHERE project_id IN (SELECT project_id FROM project_assign WHERE user_id = '%s') LIMIT 20", $user_id);
+        $project = json_decode(file_get_contents("php://input"));
+        $project_name = filter_var($project->project, FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        $q = sprintf("SELECT description, severity, status FROM tickets WHERE title LIKE '%s'", $project_name);
 
         $result = $conn->query($q);
         $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);

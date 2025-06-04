@@ -1,6 +1,6 @@
 <?php
 require_once("config.php");
-header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Origin: " + .$_ENV["IP"]);
 header('Access-Control-Allow-Headers: Content-Type');
 header("Access-Control-Allow-Credentials: true");
 
@@ -16,7 +16,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
             break;
         }
 
-        $q = "SELECT * FROM projects WHERE name LIKE UPPER(?)";
+        $q = "SELECT * FROM tickets WHERE title LIKE UPPER(?)";
 
         $result = $conn->execute_query($q, [$name]);
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -30,26 +30,34 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case "POST":
         $user = json_decode(file_get_contents("php://input"));
 
-        $name = filter_var($user->name, FILTER_SANITIZE_SPECIAL_CHARS);
+        $title = filter_var($user->title, FILTER_SANITIZE_SPECIAL_CHARS);
 
         $desc = filter_var($user->desc, FILTER_SANITIZE_SPECIAL_CHARS);
 
+        $severity = filter_var($user->severity, FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $password = filter_var($user->pwd, FILTER_SANITIZE_SPECIAL_CHARS);
-        if (!$password){
-            echo 4;
-        }
-        if (!$name || !$desc) {
+        $user_id = $_SESSION["user_id"];
+
+        $project = filter_var($user->project, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $status = "New";
+
+        if (!$title || !$desc || !$severity || !$project) {
             echo 1;
             break;
         }
 
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        $q = sprintf("SELECT project_id FROM projects WHERE name = '%s'", $project);
 
-        $user_id = $_SESSION["user_id"];
+        $result = $conn->query($q);
+        $project_id = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        $stmt = $conn->prepare("INSERT INTO projects VALUES (NULL, ?, ?, CURRENT_TIMESTAMP, ?, ?)");
-        $stmt->bind_param("isss", $user_id, $name, $desc, $password);
+        $project = (int)$project_id[0]["project_id"];
+
+        $q = sprintf("INSERT INTO tickets VALUES (NULL, '%s', '%s', %d, '%s', CURRENT_TIMESTAMP, '%s', %d)", $title, $desc, $user_id, $severity, $status, $project);
+        
+        $stmt = $conn->prepare($q);
+        
 
         if (!$stmt) {
             var_dump($conn->error_list);
@@ -57,7 +65,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         }
 
         if ($stmt->execute()) {
-            echo "Project Created";
+            echo "Ticket Created";
         } else {
             echo 6;
         }

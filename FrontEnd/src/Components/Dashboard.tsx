@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useUserContext } from "./Context";
 import Projects from "./Projects";
 import Account from "./Account";

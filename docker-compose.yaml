@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  react:
+  react-app:
     build: ./FrontEnd
-    container_name: React
+    container_name: react
     ports:
       - 3000:3000
     volumes:
@@ -13,30 +13,55 @@ services:
     tty: true
 
   php:
-    build: ./Server
+    build: ./PHP
     container_name: PHP
-    volumes:
-      - ./Server:/var/www/html
+    environment:
+      - IP="172.22.20.64"
     ports:
       - 9000:80
+    volumes:
+      - ./PHP:/var/www/html
 
-  db:
-    image: mysql
+  mysql:
+    image: mysql:8.0.31-debian
     container_name: MYSQL
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: sysadmin
+      MYSQL_PASSWORD: sysAdminPass1
     volumes:
-      - ./BackEnd/SQL:/var/lib/mysql
+      - ./SQL/Data:/var/lib/mysql
     ports:
       - 3306:3306
 
   phpmyadmin:
-    image: phpmyadmin
-    container_name: PHPMyAdmin
+    image: phpmyadmin:5.2.2-apache
     restart: always
+    depends_on:
+      - mysql
+    environment:
+      - PMA_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=root
     ports:
       - 9001:80
+
+  openvscode-server:
+    image: lscr.io/linuxserver/openvscode-server:latest
+    container_name: openvscode-server
     environment:
-      - PMA_ARBITRARY=1
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - CONNECTION_TOKEN= #optional
+      - CONNECTION_SECRET= #optional
+      - SUDO_PASSWORD=123 #optional
+      - SUDO_PASSWORD_HASH= #optional
+    volumes:
+      - /path/to/openvscode-server/config:/config
+      - ./:/workspace/
+    ports:
+      - 3001:3000
+    restart: unless-stopped
