@@ -12,7 +12,9 @@ const tryLogin = {
         
 
 
-        error = await axios.post("http://172.22.20.64:9000/login.php", {
+        error = await axios.post(`http://${
+            process.env.REACT_APP_SERVER_IP
+        }:9000/login.php`, {
             name: name,
             pwd: pwd,
             cookie: false,

@@ -20,7 +20,7 @@ const CreateTicket = async (ticket : Ticket) => {
         return error;
     
 
-    error = await axios.post("http://localhost:9000/ticketcreate.php", ticket, {withCredentials: true}).then((res) => {
+    error = await axios.post(`http://${process.env.REACT_APP_SERVER_IP}:9000/ticketcreate.php`, ticket, {withCredentials: true}).then((res) => {
         if (res.data === 1) {
             return "Title or Description is invalid";
         } else if (res.data === 6) {
@@ -34,7 +34,8 @@ const CreateTicket = async (ticket : Ticket) => {
         return error;
     
 
-    error = await axios.post("http://localhost:9000/ticketassign.php", ticket, {withCredentials: true}).then((res) => {
+error = await axios.post(`http://${process.env.REACT_APP_SERVER_IP}:9000/ticketassign.php`, ticket, {withCredentials: true}).then((res) => {
+
         if (res.data === 1) {
             return "Username or Email is invalid";
         } else if (res.data === 4) {

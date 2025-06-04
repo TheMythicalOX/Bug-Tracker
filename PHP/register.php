@@ -1,9 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
+require_once("config.php");
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$conn = new mysqli("db", "root", "root", "bug-tracker");
+$conn = new mysqli("MYSQL", "root", "root", "mydatabase");
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case "GET":

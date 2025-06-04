@@ -1,11 +1,7 @@
 <?php
 require_once("config.php");
-header("Access-Control-Allow-Origin: " + .$_ENV["IP"]);
-header('Access-Control-Allow-Headers: Content-Type');
-header("Access-Control-Allow-Credentials: true");
-
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$conn = new mysqli("db", "root", "root", "bug-tracker");
+$conn = new mysqli("MYSQL", "root", "root", "mydatabase");
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case "GET":
@@ -16,7 +12,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
             break;
         }
 
-        $q = "SELECT * FROM projects WHERE name LIKE UPPER(?)";
+        $q = "SELECT * FROM projects WHERE title LIKE UPPER(?)";
 
         $result = $conn->execute_query($q, [$name]);
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -43,6 +39,8 @@ switch($_SERVER["REQUEST_METHOD"]) {
             echo 1;
             break;
         }
+
+        echo var_dump($_SESSION);
 
         $password = password_hash($password, PASSWORD_DEFAULT);
 

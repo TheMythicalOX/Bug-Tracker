@@ -26,7 +26,10 @@ const CreateProject = async (proj : ProjectSub) => {
         return error;
     
 
-    error = await axios.post("http://localhost:9000/projectcreate.php", proj, {withCredentials: true}).then((res) => {
+
+    error = await axios.post(`http://${
+        process.env.REACT_APP_SERVER_IP
+    }:9000/projectcreate.php`, proj, {withCredentials: true}).then((res) => {
         if (res.data === 1) {
             return "Username or Email is invalid";
         } else if (res.data === 4) {
@@ -42,7 +45,10 @@ const CreateProject = async (proj : ProjectSub) => {
         return error;
     
 
-    error = await axios.post("http://localhost:9000/projectassign.php", proj, {withCredentials: true}).then((res) => {
+
+    error = await axios.post(`http://${
+        process.env.REACT_APP_SERVER_IP
+    }:9000/projectassign.php`, proj, {withCredentials: true}).then((res) => {
         if (res.data === 1) {
             return "Username or Email is invalid";
         } else if (res.data === 4) {

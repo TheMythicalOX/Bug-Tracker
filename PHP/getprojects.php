@@ -1,16 +1,13 @@
 <?php
 require_once("config.php");
-header("Access-Control-Allow-Origin: " + .$_ENV["IP"]);
-header('Access-Control-Allow-Headers: Content-Type');
-header("Access-Control-Allow-Credentials: true");
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$conn = new mysqli("db", "root", "root", "bug-tracker");
+$conn = new mysqli("MYSQL", "root", "root", "mydatabase");
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case "POST":
         $user_id = $_SESSION["user_id"];
-        $q = sprintf("SELECT name FROM projects WHERE project_id IN (SELECT project_id FROM project_assign WHERE user_id = '%s') LIMIT 20", $user_id);
+        $q = sprintf("SELECT title FROM projects WHERE project_id IN (SELECT project_id FROM project_assign WHERE user_id = '%s') LIMIT 20", $user_id);
 
         $result = $conn->query($q);
         $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);

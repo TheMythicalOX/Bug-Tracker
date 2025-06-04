@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    $conn = new mysqli("db", "root", "root", "bug-tracker");
+    $conn = new mysqli("MYSQL", "root", "root", "mydatabase");
     
     if ($user->cookie){
         if(isset($_SESSION["username"])) {
@@ -50,10 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
     
+
     if (password_verify($password, $users[0]["password"])){
+        $_SESSION["user_id"] = $users[0]["id"];
         $_SESSION["username"] = $name;
         $_SESSION["password"] = $password;
-        $_SESSION["user_id"] = $users[0]["id"];
         echo "Logged in";
     } else {
         echo "Username or Password is incorrect";
