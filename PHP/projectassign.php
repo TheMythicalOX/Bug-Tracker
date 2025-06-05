@@ -9,12 +9,12 @@ switch($_SERVER["REQUEST_METHOD"]) {
         $project = json_decode(file_get_contents("php://input"));
         $user_id = $_SESSION["user_id"];
 
-        $q = "SELECT project_id FROM projects WHERE title LIKE UPPER(?)";
+        $q = "SELECT id FROM projects WHERE title LIKE UPPER(?)";
 
         $result = $conn->execute_query($q, [$project->name]);
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
         mysqli_free_result($result);
-        $proj_id = $users[0]["project_id"];
+        $proj_id = $users[0]["id"];
         $role = "ADMIN";
 
         $stmt = $conn->prepare("INSERT INTO project_assign VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP)");

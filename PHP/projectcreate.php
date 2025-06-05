@@ -40,8 +40,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
             break;
         }
 
-        echo var_dump($_SESSION);
-
         $password = password_hash($password, PASSWORD_DEFAULT);
 
         $user_id = $_SESSION["user_id"];

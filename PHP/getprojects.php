@@ -7,7 +7,7 @@ $conn = new mysqli("MYSQL", "root", "root", "mydatabase");
 switch($_SERVER["REQUEST_METHOD"]) {
     case "POST":
         $user_id = $_SESSION["user_id"];
-        $q = sprintf("SELECT title FROM projects WHERE project_id IN (SELECT project_id FROM project_assign WHERE user_id = '%s') LIMIT 20", $user_id);
+        $q = sprintf("SELECT title FROM projects WHERE id IN (SELECT project_id FROM project_assign WHERE user_id = '%s') LIMIT 20", $user_id);
 
         $result = $conn->query($q);
         $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);

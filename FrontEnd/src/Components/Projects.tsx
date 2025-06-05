@@ -8,12 +8,11 @@ import GetIsAdmin from "../API/GetIsAdmin";
 import {useUserContext} from "./Context";
 
 export type projectDisplay = {
-    name: string;
+    title: string;
 };
 
 const Projects = () => {
     const user = useUserContext();
-    console.log(user)
 
     const [createPage, setCreatPage] = useState(false);
     const [JoinProjectDisplay, setJoinProjectDisplay] = useState(false);
@@ -27,6 +26,7 @@ const Projects = () => {
 
     const handleProjectSelect = async (name : string) => {
         const tmp = await GetIsAdmin(name);
+        console.log(user)
         setIsAdmin(tmp);
         setProject(name);
     };
@@ -51,15 +51,15 @@ const Projects = () => {
                 tmp.push (
                     <div className={`p-5 grid grid-cols-2 items-center`}
                         key={
-                            element.name
+                            element.title
                     }>
-                        <h1 className="text-3xl">
+                        <h1 className="text-3xl text-black">
                             {
-                            element.name
+                            element.title
                         }</h1>
                         <button onClick={
                                 () => {
-                                    handleProjectSelect(element.name);
+                                    handleProjectSelect(element.title);
                                 }
                             }
                             className={`bg-blue-500 text-2xl p-3 m-auto w-52 rounded-2xl`}>
@@ -80,30 +80,40 @@ const Projects = () => {
         if (error) 
             setError(null);
         
+
+
         if (id === "name") 
             setProj({
                 ...proj,
                 name: e.currentTarget.value
             });
         
+
+
         if (id === "desc") 
             setProj({
                 ...proj,
                 desc: e.currentTarget.value
             });
         
+
+
         if (id === "pwd") 
             setProj({
                 ...proj,
                 pwd: e.currentTarget.value
             });
         
+
+
         if (id === "pwd2") 
             setProj({
                 ...proj,
                 pwd2: e.currentTarget.value
             });
         
+
+
     };
 
     const handleCreateProject = async (e : React.FormEvent) => {
@@ -182,6 +192,8 @@ const Projects = () => {
                                                     if (joinError) 
                                                         setJoinError(null);
                                                     
+
+
                                                     setProjectID(e.target.value);
                                                 }
                                             }
