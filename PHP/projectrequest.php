@@ -13,7 +13,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
             break;
         }
 
-        $q = "SELECT * FROM projects WHERE project_id = ?";
+        $q = "SELECT * FROM projects WHERE id = ?";
 
         $result = $conn->execute_query($q, [$id]);
         $users = mysqli_fetch_all($result, MYSQLI_ASSOC);

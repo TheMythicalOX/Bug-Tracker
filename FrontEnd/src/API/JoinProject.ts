@@ -15,6 +15,7 @@ const JoinProject = async (id : string) : Promise < boolean | string > => {
         return error;
     
 
+
     error = await axios.post(`http://${
         process.env.REACT_APP_SERVER_IP
     }:9000/projectrequest.php`, {
@@ -28,6 +29,7 @@ const JoinProject = async (id : string) : Promise < boolean | string > => {
     if (error) 
         return error;
     
+
     return true;
 };
 

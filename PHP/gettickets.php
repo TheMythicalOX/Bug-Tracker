@@ -10,9 +10,9 @@ switch($_SERVER["REQUEST_METHOD"]) {
         $project_name = filter_var($project->project, FILTER_SANITIZE_SPECIAL_CHARS);
         
         $q = sprintf("SELECT title FROM tickets 
-        WHERE ticket_id IN 
+        WHERE id IN 
         (SELECT ticket_id FROM ticket_assign WHERE project_id = 
-        (SELECT project_id FROM projects WHERE name = UPPER('%s'))) 
+        (SELECT id FROM projects WHERE title = UPPER('%s'))) 
         LIMIT 20",$project_name);
 
         $result = $conn->query($q);

@@ -10,7 +10,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         $name = filter_var($project->project, FILTER_SANITIZE_SPECIAL_CHARS);
 
         $user_id = $_SESSION["user_id"];
-        $q = sprintf("SELECT role FROM project_assign WHERE user_id = %d AND project_id = (SELECT project_id FROM projects WHERE project_id = (SELECT project_id From projects WHERE name = '%s'))", $user_id, $name);
+        $q = sprintf("SELECT role FROM project_assign WHERE user_id = %d AND project_id = (SELECT id FROM projects WHERE id = (SELECT id From projects WHERE title = '%s'))", $user_id, $name);
 
         $result = $conn->query($q);
         $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);

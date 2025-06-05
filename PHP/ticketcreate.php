@@ -44,12 +44,12 @@ switch($_SERVER["REQUEST_METHOD"]) {
             break;
         }
 
-        $q = sprintf("SELECT project_id FROM projects WHERE name = '%s'", $project);
+        $q = sprintf("SELECT id FROM projects WHERE title = '%s'", $project);
 
         $result = $conn->query($q);
         $project_id = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        $project = (int)$project_id[0]["project_id"];
+        $project = (int)$project_id[0]["id"];
 
         $q = sprintf("INSERT INTO tickets VALUES (NULL, '%s', '%s', %d, '%s', CURRENT_TIMESTAMP, '%s', %d)", $title, $desc, $user_id, $severity, $status, $project);
         
