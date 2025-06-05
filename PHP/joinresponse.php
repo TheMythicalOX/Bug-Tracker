@@ -12,7 +12,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         $user = filter_var($inputs->name, FILTER_SANITIZE_SPECIAL_CHARS);
         $role = "DEV";
         
-        $q = sprintf("SELECT project_id, user_id FROM project_join WHERE user_id = (SELECT id FROM users WHERE username = '%s') AND project_id = (SELECT project_id FROM projects WHERE name = '%s')", $user, $project_name);
+        $q = sprintf("SELECT project_id, user_id FROM project_join WHERE user_id = (SELECT id FROM users WHERE username = '%s') AND project_id = (SELECT id FROM projects WHERE title = '%s')", $user, $project_name);
 
         $result = $conn->query($q);
         $IDs = mysqli_fetch_all($result, MYSQLI_ASSOC);
