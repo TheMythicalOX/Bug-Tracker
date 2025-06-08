@@ -16,7 +16,7 @@ services:
     build: ./PHP
     container_name: PHP
     environment:
-      - IP="172.22.20.64"
+      - IP="192.168.4.130"
     ports:
       - 9000:80
     volumes:
