@@ -23,9 +23,9 @@ const Login = (props: { setChangePage: Function }) => {
   };
   return (
     <>
-      <div className="w-screen h-screen grid grid-cols-1 items-center justify-items-center">
+      <div className="w-screen h-screen text-pritext grid grid-cols-1 items-center justify-items-center">
         <form
-          className={`bg-black bg-opacity-[0.03] shadow-lg w-3/6 h-4/6 rounded-3xl items-center justify-items-center grid`}
+          className={`bg-black bg-opacity-[0.1] shadow-lg w-3/6 h-4/6 rounded-3xl items-center justify-items-center grid`}
         >
           {" "}
           {error && <h1> {error}</h1>}
@@ -35,7 +35,7 @@ const Login = (props: { setChangePage: Function }) => {
               Username or Email
             </label>
             <input
-              className="rounded-3xl bg-secondary text-left p-3 px-6"
+              className="rounded-3xl shadow-md bg-secondary text-left p-3 px-6"
               required
               type="text"
               id="name"
@@ -50,7 +50,7 @@ const Login = (props: { setChangePage: Function }) => {
               Password
             </label>
             <input
-              className="rounded-3xl bg-secondary text-left p-3 px-6"
+              className="rounded-3xl shadow-md bg-secondary text-left p-3 px-6"
               required
               type="password"
               id="pwd"
@@ -60,7 +60,7 @@ const Login = (props: { setChangePage: Function }) => {
             />
           </div>
           <button
-            className={`bg-accent text-2xl p-3 px-16 rounded-3xl`}
+            className={`bg-gradient-to-b from-accent active:to-accent active:from-secondary to-secondary text-2xl shadow-md p-3 px-16 rounded-3xl`}
             onClick={handleSubmit}
           >
             Login

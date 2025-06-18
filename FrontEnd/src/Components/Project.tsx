@@ -65,7 +65,7 @@ const Project = (props: {
               onClick={() => {
                 handleTicketSelect(element.title);
               }}
-              className={`bg-blue-500 text-2xl p-3 m-auto w-52 rounded-2xl`}
+              className={`bg-gradient-to-l from-accent active:to-accent active:from-secondary to-secondary text-2xl p-3 m-auto w-52 rounded-2xl`}
             >
               {"View Ticket"}
             </button>
@@ -117,12 +117,12 @@ const Project = (props: {
     <>
       {!createTicket && (
         <div className="grid gap-5 p-5 h-full items-center">
-          <div className="bg-stone-300 h-4/6 py-10 grid items-center rounded-3xl">
+          <div className="bg-back h-4/6 py-10 grid items-center rounded-3xl">
             <div className="grid grid-cols-2 gap-10 m-auto">
               <h1 className="col-span-2 text-2xl">{props.name}</h1>
               {error && <h1 className="col-span-2 text-2xl">{error}</h1>}
               <button
-                className="bg-stone-400 text-2xl rounded-md p-2"
+                className="bg-back text-2xl rounded-md p-2"
                 onClick={() => {
                   props.setProject(null);
                 }}
@@ -133,14 +133,14 @@ const Project = (props: {
                 onClick={() => {
                   setCreateTicket(true);
                 }}
-                className="bg-stone-400 text-2xl rounded-md p-2"
+                className="bg-back text-2xl rounded-md p-2"
               >
                 Make Ticket
               </button>
               {props.isAdmin && (
                 <div className="col-span-2">
                   <button
-                    className="bg-stone-400 text-2xl rounded-md p-2 "
+                    className="bg-back text-2xl rounded-md p-2 "
                     onClick={(e) => {
                       e.preventDefault();
                       setShowAdminPanel(true);
@@ -166,11 +166,11 @@ const Project = (props: {
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
-                className="ml-40 bg-stone-300 shadow-stone-600 shadow-2xl grid h-1/3 text-center items-center rounded-3xl"
+                className="ml-40 bg-back shadow-2xl grid h-1/3 text-center items-center rounded-3xl"
               >
                 <AdminPanel project={props.name} />
                 <button
-                  className="bg-stone-400 text-2xl p-3 px-16 rounded-3xl"
+                  className="bg-back text-2xl p-3 px-16 rounded-3xl"
                   onClick={() => {
                     setShowAdminPanel(false);
                   }}
@@ -191,19 +191,37 @@ const Project = (props: {
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
-                className="ml-40 bg-black w-96 h-1/3  rounded-3xl"
+                className="m-auto bg-secondary bg-opacity-[0.75] w-[60vw] h-[60vh] rounded-3xl"
               >
-                <h1>{selectedTicket.title}</h1>
-                <h1>{selectedTicket.desc}</h1>
-                <h1>{selectedTicket.status}</h1>
-                <h1>{selectedTicket.severity}</h1>
-                <button
-                  onClick={() => {
-                    setSelectedTicket(null);
-                  }}
-                >
-                  Go Back
-                </button>
+                <div className="p-5 m-auto grid gap-5 grid-cols-3 grid-rows-12 h-full">
+                  <div className="col-span-3 row-span-2">
+                    <h1 className="inline">Title: </h1>
+                    <h3 className="inline">{selectedTicket.title}</h3>
+                  </div>
+                  <div className="col-span-3 grid grid-cols-2 row-span-2">
+                    <div>
+                      <h1 className="inline">Status: </h1>
+                      <h3 className="inline">{selectedTicket.status}</h3>
+                    </div>
+                    <div>
+                      <h1 className="inline">Severity: </h1>
+                      <h3 className="inline">{selectedTicket.severity}</h3>
+                    </div>
+                  </div>
+                  <div className="col-span-3">
+                    <h1 className="inline">Description: </h1>
+                    <h3 className="inline">{selectedTicket.desc}</h3>
+                  </div>
+                  <div className="col-span-3 row-start-12">
+                    <button className="bg-back opacity-[0.75] hover:opacity-[1] p-2 rounded-lg"
+                      onClick={() => {
+                        setSelectedTicket(null);
+                      }}
+                    >
+                      Go Back
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -211,14 +229,14 @@ const Project = (props: {
       )}
       {createTicket && (
         <div className="grid grid-cols-2 gap-5 p-5 grid-rows-2 h-full">
-          <div className="bg-stone-900 col-span-2">
+          <div className="bg-back col-span-2">
             {error && <h1>{error}</h1>}
             {props.name}
             <button
               onClick={() => {
                 setCreateTicket(false);
               }}
-              className="bg-black rounded-md p-2"
+              className="bg-back rounded-md p-2"
             >
               Go Back
             </button>
