@@ -5,14 +5,14 @@ import GetProjects from "../API/GetProjects";
 import JoinProject from "../API/JoinProject";
 import Project from "./Project";
 import GetIsAdmin from "../API/GetIsAdmin";
-import { useUserContext } from "./Context";
+// import { useUserContext } from "./Context";
 
 export type projectDisplay = {
   title: string;
 };
 
 const Projects = () => {
-  const user = useUserContext();
+  // const user = useUserContext();
 
   const [createPage, setCreatPage] = useState(false);
   const [JoinProjectDisplay, setJoinProjectDisplay] = useState(false);
@@ -33,7 +33,6 @@ const Projects = () => {
 
   const handleProjectSelect = async (name: string) => {
     const tmp = await GetIsAdmin(name);
-    console.log(user);
     setIsAdmin(tmp);
     setProject(name);
   };

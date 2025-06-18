@@ -1,5 +1,5 @@
 import { dashSwitch } from "./Dashboard";
-import { UserContextT, useUserContext } from "./Context";
+import { UserContextT } from "./Context";
 import Logout from "../API/Logout";
 import { useState } from "react";
 
@@ -9,8 +9,7 @@ const Navbar = (props: {
   user: UserContextT;
 }) => {
   const [tryLogout, setTryLogout] = useState(false);
-  const user = useUserContext();
-  console.log(user);
+  // const user = useUserContext();
 
   const enabled = `lg:grid shadow shadow-stone-400 row-span-1 text-center items-center transition-colors duration-500 hover:bg-stone-400`;
   const disabled = `lg:grid shadow shadow-stone-400 row-span-1 text-center items-center transition-colors bg-stone-400`;
@@ -42,7 +41,11 @@ const Navbar = (props: {
           <div
             className={`shadow shadow-stone-400 grid row-span-1 text-center items-center `}
           >
-            <h1>Logo</h1>
+            <img
+              src={require("../Images/Logo.png")}
+              alt="TMP"
+              className="w-[50%] m-auto"
+            />
           </div>
           <div className="grid row-span-2">
             <div
