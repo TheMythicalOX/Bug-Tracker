@@ -78,6 +78,7 @@ const Project = (props: {
 
   useEffect(() => {
     displayTickets();
+    setTicket({ ...ticket, severity: "Low" });
   }, []);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -213,7 +214,8 @@ const Project = (props: {
                     <h3 className="inline">{selectedTicket.desc}</h3>
                   </div>
                   <div className="col-span-3 row-start-12">
-                    <button className="bg-back opacity-[0.75] hover:opacity-[1] p-2 rounded-lg"
+                    <button
+                      className="bg-back opacity-[0.75] hover:opacity-[1] p-2 rounded-lg"
                       onClick={() => {
                         setSelectedTicket(null);
                       }}
@@ -266,7 +268,9 @@ const Project = (props: {
                 placeholder="Role"
               />
               <select id="severity" onChange={handleChange2}>
-                <option value="Low">Low</option>
+                <option value="Low">
+                  Low
+                </option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
                 <option value="ASAP">ASAP</option>
