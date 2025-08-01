@@ -8,7 +8,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case "POST":
         $id = $_SESSION["user_id"];
 
-        $q = sprintf("SELECT * FROM tickets WHERE id IN (SELECT ticket_id FROM ticket_assign WHERE user_id = '%s')", $id);
+        $q = sprintf("SELECT tickets.id, tickets.title, tickets.project_id, tickets.status, tickets.severity, projects.title AS projTitle FROM tickets INNER JOIN projects ON tickets.project_id=projects.id WHERE tickets.id IN (SELECT ticket_id FROM ticket_assign WHERE user_id = '%s') ", $id);
 
         $result = $conn->query($q);
         $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
