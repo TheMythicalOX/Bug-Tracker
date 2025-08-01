@@ -117,9 +117,9 @@ const Project = (props: {
   return (
     <>
       {!createTicket && (
-        <div className="grid gap-5 p-5 h-full items-center">
-          <div className="bg-back h-4/6 py-10 grid items-center rounded-3xl">
-            <div className="grid grid-cols-2 gap-10 m-auto">
+        <div className="flex w-[100%] h-[100vh] items-center">
+          <div className="bg-back h-[90%] m-auto flex flex-wrap items-center rounded-3xl">
+            <div className="grid grid-cols-2 w-[100%]  m-auto h-[20%]">
               <h1 className="col-span-2 text-2xl">{props.name}</h1>
               {error && <h1 className="col-span-2 text-2xl">{error}</h1>}
               <button
@@ -152,8 +152,8 @@ const Project = (props: {
                 </div>
               )}
             </div>
-            <div className="overflow-y-scroll h-5/6">
-              <div className={`grid grid-cols-1 p-10 `}>{ticketDisplays}</div>
+            <div className="overflow-y-scroll w-[100%] h-[70%]">
+              <div className={`grid grid-cols-1 `}>{ticketDisplays}</div>
             </div>
           </div>
           {showAdminPanel && (
@@ -268,9 +268,7 @@ const Project = (props: {
                 placeholder="Role"
               />
               <select id="severity" onChange={handleChange2}>
-                <option value="Low">
-                  Low
-                </option>
+                <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
                 <option value="ASAP">ASAP</option>
