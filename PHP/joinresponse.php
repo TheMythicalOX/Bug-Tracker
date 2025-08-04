@@ -38,8 +38,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         }
 
 
-
-        $q = sprintf("UPDATE project_join SET status = '%d' WHERE project_id = '%d' AND user_id = '%d'", $status, (int)$IDs[0]["project_id"], (int)$IDs[0]["user_id"], $role);
+        $q = sprintf("DELETE FROM project_join WHERE project_id = '%d' AND user_id = '%d'", (int)$IDs[0]["project_id"], (int)$IDs[0]["user_id"]);
         
         $stmt = $conn->prepare($q);
         

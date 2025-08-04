@@ -179,9 +179,6 @@ const Project = (props: {
           </div>
           {showAdminPanel && (
             <div
-              onClick={() => {
-                setShowAdminPanel(false);
-              }}
               className="h-screen w-screen absolute inset-0 grid justify-center items-center filter backdrop-blur-sm"
             >
               <div
