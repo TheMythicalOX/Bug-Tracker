@@ -7,6 +7,19 @@ h2 {
   font-family: "Alfa Slab One", serif;
 }
 
+.mainBackGrad {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    45deg,
+    rgba(70, 15, 246, 0.75) 0%,
+    rgba(120, 13, 182, 0.75) 11%,
+    rgba(156, 11, 136, 0.75) 29%,
+    rgba(187, 9, 97, 0.75) 50%,
+    rgba(178, 10, 121, 0.75) 75%,
+    rgba(150, 15, 198, 0.75) 100%
+  );
+}
+
 button {
   transition: all;
   transition-duration: 500ms;

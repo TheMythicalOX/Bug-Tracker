@@ -31,7 +31,7 @@ const Dashboard = () => {
           <div className="shadow-lg">
             <Navbar current={current} setCurrent={setCurrent} user={user} />
           </div>
-          <div className="dash-grid-area-2 text-center bg-black bg-opacity-[0.1] items-center">
+          <div className="dash-grid-area-2 text-center mainBackGrad items-center">
             {dashboardSwitch(current)}
           </div>
         </div>
