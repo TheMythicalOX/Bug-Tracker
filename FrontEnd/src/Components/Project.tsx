@@ -4,6 +4,7 @@ import CreateTicket from "../API/CreateTicket";
 import GetTickets from "../API/GetTickets";
 import GetTicket from "../API/GetTicket";
 import AdminPanel from "./AdminPanel";
+import CompleteTicket from "../API/CompleteTicket";
 
 export type Ticket = {
   title: string;
@@ -26,6 +27,8 @@ const Project = (props: {
   isAdmin: boolean;
 }) => {
   const [createTicket, setCreateTicket] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [ticketStatus, setTicketstatus] = useState<string | null>(null);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedTicket, setSelectedTicket] = useState<TicketDisplay | null>(
@@ -110,6 +113,24 @@ const Project = (props: {
       } else if (typeof isReg === "boolean") {
         setCreateTicket(false);
         displayTickets();
+      }
+    }
+  };
+
+  const handleComplete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (selectedTicket && ticketStatus) {
+      const completed = await CompleteTicket({
+        title: selectedTicket.title,
+        project: ticket.project,
+        status: ticketStatus,
+      });
+      if (completed !== "Ticket Updated") {
+        setError(completed);
+      } else {
+        setIsEdit(false);
+        setSelectedTicket(null);
+        setTicketstatus(null);
       }
     }
   };
@@ -213,6 +234,35 @@ const Project = (props: {
                     <h1 className="inline">Description: </h1>
                     <h3 className="inline">{selectedTicket.desc}</h3>
                   </div>
+                  <div className="col-span-3">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsEdit(true);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  {isEdit && (
+                    <div className="col-span-3">
+                      <select
+                        onChange={(e) => {
+                          setTicketstatus(e.target.value);
+                        }}
+                        defaultValue={selectedTicket.status}
+                      >
+                        <option value="Completed">Completed</option>
+                        <option value="New">New</option>
+                        <option value="In Progress">In Progress</option>
+                      </select>
+                      <div className="col-span-3">
+                        <button onClick={handleComplete}>
+                          Update Ticket Status
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   <div className="col-span-3 row-start-12">
                     <button
                       className="bg-back opacity-[0.75] hover:opacity-[1] p-2 rounded-lg"
