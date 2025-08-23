@@ -1,14 +1,11 @@
 import axios from "axios";
 import { UserDisplay } from "../Components/AdminPanel";
 
-const GetUsers = async (
-  project: string
-): Promise<UserDisplay[]> => {
+const GetUsers = async (project: string): Promise<UserDisplay[]> => {
   return await axios
-    .post(
-      `http://${process.env.REACT_APP_SERVER_IP}:9000/getusers.php`,
-      { project: project }
-    )
+    .post(`https://${process.env.REACT_APP_SERVER_IP}/getusers.php`, {
+      project: project,
+    })
     .then((res) => {
       if (res.data === 1) {
         return [
@@ -21,6 +18,5 @@ const GetUsers = async (
       }
     });
 };
-
 
 export default GetUsers;

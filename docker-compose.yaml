@@ -1,9 +1,9 @@
 services:
   react-app:
     build: ./FrontEnd
-    container_name: react
+    container_name: react-bugtrack
     ports:
-      - 3000:3000
+      - 3020:3000
     volumes:
       - ./FrontEnd:/app
       - /app/node_modules
@@ -12,17 +12,17 @@ services:
 
   php:
     build: ./PHP
-    container_name: PHP
+    container_name: PHP-bugtrack
     environment:
-      - IP="192.168.4.130"
+      - IP="bugphp.elijahcline.dev"
     ports:
-      - 9000:80
+      - 9020:80
     volumes:
       - ./PHP:/var/www/html
 
   mysql:
     image: mysql:8.0.31-debian
-    container_name: MYSQL
+    container_name: MYSQL-bugtrack
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -33,22 +33,23 @@ services:
     volumes:
       - ./SQL/Data:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3326:3306
 
   phpmyadmin:
     image: phpmyadmin:5.2.2-apache
+    container_name: phpmyadmin-bugtrack
     restart: always
     depends_on:
       - mysql
     environment:
-      - PMA_HOST=mysql
+      - PMA_HOST=MYSQL-bugtrack
       - MYSQL_ROOT_PASSWORD=root
     ports:
-      - 9001:80
+      - 9021:80
 
   openvscode-server:
     image: lscr.io/linuxserver/openvscode-server:latest
-    container_name: openvscode-server
+    container_name: openvscode-server-bugtrack
     environment:
       - PUID=1000
       - PGID=1000
@@ -61,5 +62,5 @@ services:
       - /path/to/openvscode-server/config:/config
       - ./:/workspace/
     ports:
-      - 3001:3000
+      - 3021:3000
     restart: unless-stopped

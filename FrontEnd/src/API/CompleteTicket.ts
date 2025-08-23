@@ -7,7 +7,7 @@ const CompleteTicket = async (ticket: {
 }) => {
   let error = await axios
     .post(
-      `http://${process.env.REACT_APP_SERVER_IP}:9000/ticketcomplete.php`,
+      `https://${process.env.REACT_APP_SERVER_IP}/ticketcomplete.php`,
       ticket,
       { withCredentials: true }
     )

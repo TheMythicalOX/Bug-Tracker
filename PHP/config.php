@@ -1,19 +1,19 @@
 <?php
 
 ini_set("session.use_only_cookies", 1);
-ini_set("session.use_strict_mode", 0); # change to 1 when using https
+ini_set("session.use_strict_mode", 1); # change to 1 when using https
 ini_set("session.cookie_samesite", "Lax");
 ini_set("sessions.save_path", "/tmp");
-header("Access-Control-Allow-Origin: http://172.22.20.172:3000");
+header("Access-Control-Allow-Origin: https://bugtrack.elijahcline.dev");
 header('Access-Control-Allow-Headers: Content-Type');
 header("Access-Control-Allow-Credentials: true");
 
 
 session_set_cookie_params([
     "lifetime" => 3600,
-    "domain" => "172.22.20.172",
+    "domain" => "elijahcline.dev",
     "path" => "/",
-    "secure" => false, # change to true when using https
+    "secure" => true, # change to true when using https
     "httponly" => true,
 ]);
 

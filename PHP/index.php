@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
-$conn = new mysqli("db", "root", "root", "mysql");
+$conn = new mysqli("MYSQL-bugtrack", "root", "root", "mydatabase");
 
 if ($conn)
 {
