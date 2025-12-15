@@ -1,5 +1,6 @@
 services:
   react-app:
+    restart: unless-stopped
     build: ./FrontEnd
     container_name: react-bugtrack
     ports:
@@ -11,6 +12,7 @@ services:
     tty: true
 
   php:
+    restart: unless-stopped
     build: ./PHP
     container_name: PHP-bugtrack
     environment:
@@ -24,7 +26,7 @@ services:
     image: mysql:8.0.31-debian
     container_name: MYSQL-bugtrack
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: mydatabase
@@ -38,7 +40,7 @@ services:
   phpmyadmin:
     image: phpmyadmin:5.2.2-apache
     container_name: phpmyadmin-bugtrack
-    restart: always
+    restart: unless-stopped
     depends_on:
       - mysql
     environment:
